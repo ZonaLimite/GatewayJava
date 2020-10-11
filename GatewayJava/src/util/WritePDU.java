@@ -26,12 +26,11 @@ public class WritePDU {
 		if(formatR.equals("xls"))this.formatoReport="8";
 		if(formatR.equals("html"))this.formatoReport="2";
 		this.okSIE=oksie;
-		this.pathPduFile=leeProperty("pathPduFile");
+		HandleProperties hp = new HandleProperties();
+		this.pathPduFile=hp.leeProperties("pathPduFile");
 		this.writeFile(this.pathPduFile);
 	}
-	public String leeProperty(String opcion) {
-		return "D:\\MIS\\ReportManager\\Data\\myExport.pdu";
-	}
+
 	public void writeFile(String pathNameFile) {
 		try {
 			File f = new File(pathNameFile);

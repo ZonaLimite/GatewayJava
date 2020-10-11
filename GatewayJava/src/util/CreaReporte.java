@@ -13,10 +13,12 @@ public class CreaReporte {
 	String oksie;
 	String tipoMachine;
 	String tipoAutomatiz;
+	HandleProperties hp;
 	public CreaReporte(String maskReport, String enviarSIE, String tipoAutomatizacion) {
 		this.mask=maskReport;
 		this.oksie=enviarSIE;
 		this.tipoAutomatiz=tipoAutomatizacion;
+		hp = new HandleProperties();
 		if(tipoAutomatizacion == null) {
 			if(enviarSIE == null)enviarSIE="True";
 			executeReportMask(maskReport,enviarSIE);
@@ -26,6 +28,7 @@ public class CreaReporte {
 	}
 	private void executeReportMask(String maskReport, String enviarSIE) {
 		String parteFormato=null;
+		String parteMascara=null;
 		//Asignar Equipement
   		if(mask.contains("TOP"))tipoMachine="TOP";
   		if(mask.contains("CSU"))tipoMachine="VCS";
@@ -40,14 +43,15 @@ public class CreaReporte {
   		//
   		StringTokenizer stSepara2 = new StringTokenizer(maskReport,".");	
   		while(stSepara2.hasMoreTokens()) {
-  		  String parteMascara = stSepara2.nextToken();
+  		  parteMascara = stSepara2.nextToken();
   		  parteFormato = stSepara2.nextToken();
   		} 
   		PreparaFormatIni pfi = new PreparaFormatIni(maskReport);
   		
   		WritePDU wp = new WritePDU(tipoMachine,"myMachines",parteFormato,enviarSIE);
-  		
+  		 
   		CallerRunSystem crs = new CallerRunSystem();
-  		crs.LlamarNotifier("d:\\MIS\\ReportManager\\Data\\myExport.pdu");
+  		String pathPduFile = hp.leeProperties("pathPduFile");
+  		crs.LlamarNotifier(pathPduFile);
 	}
 }

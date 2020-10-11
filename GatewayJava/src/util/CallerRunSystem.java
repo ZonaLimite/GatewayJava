@@ -11,7 +11,11 @@ public class CallerRunSystem {
 		try
         {
             // Se lanza el ejecutable.
-			String llamada = "cmd /c D:\\MIS\\bin\\notifier.exe " + pdu;
+			//Se obtiene propiedad de ruta acceso a notifier
+			HandleProperties hp = new HandleProperties();
+			String pathNotifier = hp.leeProperties("executorNotifier");
+					
+			String llamada =pathNotifier + pdu;
 			System.out.println("LLamada es :"+llamada);
             Process p=Runtime.getRuntime().exec (llamada);
             System.out.println("ejecutada llamada");
